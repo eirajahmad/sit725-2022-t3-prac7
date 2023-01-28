@@ -15,18 +15,23 @@ const io = require('socket.io')(app);
 
 // Send current time to all connected clients
 function sendTime() {
-    io.emit('time', { time: new Date().toJSON() });
+    io.emit('time', { time:JSON.stringify('No of users connected right now : '+' '+parseInt(Math.random()*10))});
+   
 }
 
 // Send current time every 10 secs
 setInterval(sendTime, 1000);
 
 // Emit welcome message on connection
-io.on('connection', function(socket) {
-    // Use socket to communicate with this particular client only, sending it it's own id
-    socket.emit('welcome', { message: 'Welcome!', id: socket.id });
-
-    socket.on('i am client', console.log);
-});
+io.on('connection',(socket)=>{
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+    setInterval(()=>{
+     // socket.emit('number', parseInt(Math.random()*10));
+      console.log('No of users  :'+parseInt(Math.random()*10));
+    }, 10000);
+  });
 
 app.listen(3000);

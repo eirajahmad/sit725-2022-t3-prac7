@@ -55,6 +55,10 @@ $(document).ready(function(){
     })
     getProjects();
     $('.modal').modal();
+    console.log('Ready')
+  //bind the button
+  $('#testButton').click(testButtonFunction)
+
   });
 
   // connect to the socket
@@ -67,3 +71,4 @@ socket.on('number', (msg) => {
 })
 
 console.log('test')
+
